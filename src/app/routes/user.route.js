@@ -11,8 +11,12 @@ router.route('/')
   .post(tryCatchAsyncHandler(updateUserInfo));
 
 async function updateUserInfo(req, res) {
-  const user = await userCtrl.updateUserInfo(req);
-  res.json(user);
+  try {
+    const user = await userCtrl.updateUserInfo(req);
+    res.json(user);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 }
 
 export default router;

@@ -26,9 +26,14 @@ async function addNewUser(user) {
 async function updateUserInfo(req) {
   let updatingUser = req.user;
   updatingUser = extend(updatingUser, pick(req.body, UPDATE_USER_WHITELIST_FIELDS));
-  updatingUser.updatedAt = Date.now;
+  updatingUser.updatedAt = new Date();
 
-  return await User.updateOne({ email: updatingUser.email }, updatingUser);
+  const result = await User.updateOne({ email: updatingUser.email }, updatingUser);
+  if (result && result.ok) {
+    return updatingUser;
+  } else {
+    throw new Error('Update user failed');
+  }
 }
 
 export { addNewUser, updateUserInfo };
