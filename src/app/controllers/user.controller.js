@@ -11,7 +11,7 @@ const userSchema = Joi.object().keys({
   password: Joi.string().required(),
   repeatPassword: Joi.string().required().valid(Joi.ref('password'))
 });
-const UPDATE_USER_WHITELIST_FIELDS = ['fullName', 'mobileNumber', 'password'];
+const UPDATE_USER_WHITELIST_FIELDS = ['fullName', 'mobileNumber', 'password', 'isActive'];
 
 async function addNewUser(user) {
   user = await Joi.validate(user, userSchema, { abortEarly: false });
