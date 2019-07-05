@@ -17,9 +17,17 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  },
   roles: [{
     type: String,
-  }]
+  }],
+  isActive: {
+    type: Boolean,
+    default: true
+  }
 });
 
 export default model('User', UserSchema);

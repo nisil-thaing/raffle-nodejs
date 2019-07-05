@@ -22,6 +22,11 @@ async function register(req, _, next) {
 
 function login(req, res) {
   const user = req.user;
+
+  if (!user.isActive) {
+    res.sendStatus(403);
+  }
+
   const token = authCtrl.generateToken(user);
 
   res.json({
