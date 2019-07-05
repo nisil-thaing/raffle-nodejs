@@ -15,6 +15,7 @@ async function register(req, _, next) {
   const user = await userCtrl.addNewUser(req.body);
   const userObj = user.toObject();
   delete userObj.hashedPassword;
+  // eslint-disable-next-line require-atomic-updates
   req.user = userObj;
   next();
 }
