@@ -39,8 +39,8 @@ const UPDATE_RAFFLE_WHITELIST_FIELDS = [
   'isActive'
 ];
 
-export async function getRaffleList() {
-  return await Raffle.find({});
+export async function getRaffleList(userId) {
+  return await Raffle.find({ userId, isActive: true });
 }
 
 export async function addNewRaffleItem(user, raffle) {
