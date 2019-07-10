@@ -28,11 +28,20 @@ async function addNewUser(user) {
 async function updateUserInfo(req) {
   let updatingUser = req.user;
   updatingUser = extend(updatingUser, pick(req.body, UPDATE_USER_WHITELIST_FIELDS));
+
+  if (updatingUser.password) {
+    updatingUser.hashedPassword = hashSync(updatingUser.password, 10);
+    delete updatingUser.password;
+  }
+
   updatingUser.updatedAt = new Date();
 
   const result = await User.updateOne({ email: updatingUser.email }, updatingUser);
   if (result && result.ok) {
-    return updatingUser;
+    return {
+      ...updatingUser,
+      hashedPassword: undefined
+    };
   } else {
     throw new Error('Update user failed');
   }
