@@ -43,6 +43,10 @@ export async function getRaffleList(userId) {
   return await Raffle.find({ userId, isActive: true });
 }
 
+export async function getRaffleItem(userId, _id) {
+  return await Raffle.findOne({ userId, _id, isActive: true });
+}
+
 export async function addNewRaffleItem(user, raffle) {
   raffle = await Joi.validate(raffle, raffleSchema, { abortEarly: false });
   // eslint-disable-next-line require-atomic-updates

@@ -7,15 +7,27 @@ import * as raffleCtrl from '@app/controllers/raffle.controller';
 const router = Router();
 router.use(passport.authenticate('jwt', { session: false }));
 
-router
-  .get('/', tryCatchAsyncHandler(getRaffleList))
-  .post('/', tryCatchAsyncHandler(addNewRaffleItem))
-  .put('/:id', tryCatchAsyncHandler(updateRaffleItem))
-  .delete('/:id', tryCatchAsyncHandler(deleteRaffleItem));
+router.route('/')
+  .get(tryCatchAsyncHandler(getRaffleList))
+  .post(tryCatchAsyncHandler(addNewRaffleItem));
+
+router.route('/:id')
+  .get(tryCatchAsyncHandler(getRaffleItem))
+  .put(tryCatchAsyncHandler(updateRaffleItem))
+  .delete(tryCatchAsyncHandler(deleteRaffleItem));
 
 async function getRaffleList(req, res) {
   try {
     const raffle = await raffleCtrl.getRaffleList(req.user._id);
+    res.json(raffle);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+async function getRaffleItem(req, res) {
+  try {
+    const raffle = await raffleCtrl.getRaffleItem(req.user._id, req.params.id);
     res.json(raffle);
   } catch (err) {
     res.status(500).send(err);
