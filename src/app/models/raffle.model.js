@@ -7,11 +7,12 @@ const RaffleSchema = new Schema({
     type: Number,
     default: 0
   },
-  discount: {
-    type: {
+  discounts: {
+    type: [{
       numOfTickets: Number,
       newCost: Number
-    }
+    }],
+    default: []
   },
   story: {
     type: {

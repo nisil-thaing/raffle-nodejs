@@ -28,7 +28,7 @@ const raffleSchema = Joi.object().keys({
 const UPDATE_RAFFLE_WHITELIST_FIELDS = [
   'name',
   'costPerTicket',
-  'discount',
+  'discounts',
   'story',
   'prize',
   'endDate',
