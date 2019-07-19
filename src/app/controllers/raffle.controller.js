@@ -52,7 +52,7 @@ export async function addNewRaffleItem(user, raffle) {
   // eslint-disable-next-line require-atomic-updates
   raffle.userId = user._id;
 
-  return new Raffle(raffle).save();
+  return await new Raffle(raffle).save();
 }
 
 export async function updateRaffleItem(req) {
@@ -63,7 +63,7 @@ export async function updateRaffleItem(req) {
   let updatingRaffle = await Raffle.findOne({ _id: raffleId, userId });
 
   if (!updatingRaffle) {
-    throw new Error('Update user failed');
+    throw new Error('Update raffle failed');
   } else {
     updatingRaffle = extend(updatingRaffle, pick(req.body, UPDATE_RAFFLE_WHITELIST_FIELDS));
     updatingRaffle.updatedAt = new Date();
@@ -72,7 +72,7 @@ export async function updateRaffleItem(req) {
     if (result && result.ok) {
       return updatingRaffle;
     } else {
-      throw new Error('Update user failed');
+      throw new Error('Update raffle failed');
     }
   }
 }
